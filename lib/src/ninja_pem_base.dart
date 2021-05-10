@@ -79,7 +79,7 @@ class PemPart {
 
     final ret = <PemPart>[];
 
-    PemPart part;
+    PemPart? part;
     while (true) {
       part = _decodeNextPem(lines);
       if (part == null) break;
@@ -101,8 +101,8 @@ class PemPart {
   static final _base64Regexp = RegExp('[a-zA-Z0-9+/=]');
 }
 
-PemPart _decodeNextPem(List<String> input) {
-  String label;
+PemPart? _decodeNextPem(List<String> input) {
+  String? label;
 
   // preeb
   while (input.isNotEmpty) {
@@ -113,7 +113,7 @@ PemPart _decodeNextPem(List<String> input) {
     line = line.substring(11);
 
     int index = line.indexOf(PemPart._suffix);
-    if (index == null) {
+    if (index == -1) {
       throw Exception('Invalid BEGIN line');
     }
 
@@ -142,7 +142,7 @@ PemPart _decodeNextPem(List<String> input) {
   while (input.isNotEmpty && !_isEndOfBlock(input.last)) {
     String line = input.removeLast();
     int index = line.lastIndexOf(PemPart._base64Regexp);
-    if (index == null) {
+    if (index == -1) {
       throw Exception('Invalid data line');
     }
     if (index > 64) {
@@ -183,7 +183,7 @@ bool _isEndOfBlock(String line) {
   line = line.substring(9);
 
   int index = line.indexOf(PemPart._suffix);
-  if (index == null) {
+  if (index == -1) {
     throw Exception('Invalid END line');
   }
 

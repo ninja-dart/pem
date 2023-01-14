@@ -107,5 +107,20 @@ Li4K
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit...Lorem ipsum dolor sit amet, consectetur adipiscing elit...Lorem ipsum dolor sit amet, consectetur adipiscing elit...Lorem ipsum dolor sit amet, consectetur adipiscing elit...Lorem ipsum dolor sit amet, consectetur adipiscing elit...\n'
                       .codeUnits)));
     });
+
+    test('#1 CRLF bug', () {
+      final pemString = '-----BEGIN KEY1-----\r\n'
+        'TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2Np\r\n'
+        'bmcgZWxpdC4uLkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0LCBjb25zZWN0ZXR1\r\n'
+        'ciBhZGlwaXNjaW5nIGVsaXQuLi5Mb3JlbSBpcHN1bSBkb2xvciBzaXQgYW1ldCwg\r\n'
+        'Y29uc2VjdGV0dXIgYWRpcGlzY2luZyBlbGl0Li4uTG9yZW0gaXBzdW0gZG9sb3Ig\r\n'
+        'c2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4uLkxvcmVtIGlw\r\n'
+        'c3VtIGRvbG9yIHNpdCBhbWV0LCBjb25zZWN0ZXR1ciBhZGlwaXNjaW5nIGVsaXQu\r\n'
+        'Li4K\r\n'
+        '-----END KEY1-----';
+
+      final part = PemPart.decodeLabelled(pemString, ['KEY1']);
+      expect(part.data, isNotEmpty);
+    });
   });
 }

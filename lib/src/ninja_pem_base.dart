@@ -96,7 +96,7 @@ class PemPart {
 
   static const _suffix = '-----';
 
-  static final _newlineRegexp = RegExp(r'\n|\r|(\r\n)');
+  static final _newlineRegexp = RegExp(r'(\r\n)|\n|\r');
 
   static final _base64Regexp = RegExp('[a-zA-Z0-9+/=]');
 }
